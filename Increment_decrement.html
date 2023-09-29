@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Counter</title>
+</head>
+
+<style>
+    body{
+        text-align: center;
+        margin-top: 100px;
+    }
+    .btn{
+        margin-top: 30px;
+        height:40px;
+        width:80px;
+        color: bisque;
+        border: none;
+        border-radius:4%;
+        font-weight: bold;
+        font-size:14px;
+    }
+    #increment{
+       background-color:cyan
+    }
+    #decrement{
+        background-color: coral;
+        color:grey
+    }
+    #startStop{
+        height:35px; width:70px;background-color:rgb(2, 24, 24);border: none;color:white;
+    }
+</style>
+<body>
+  <h1 style="color: blue;text-decoration: underline;">Counter</h1>
+  <p style="color: blueviolet; font-size:25px; font-weight: bold;">Count: <span id="count">0</span></p>
+  <button id="startStop">Start</button><br>
+  <button id="increment" class="btn">Increment</button>
+  <button id="decrement" class="btn">Decrement</button>
+
+  <script>
+    class Counter {
+      constructor() {
+        this.count = 0;
+        this.intervalId = null;
+        this.isAuto = false;
+        this.startStopButton = document.getElementById('startStop');
+        this.incrementButton = document.getElementById('increment');
+        this.decrementButton = document.getElementById('decrement');
+        this.countDisplay = document.getElementById('count');
+
+        this.startStopButton.addEventListener('click', this.toggleCounter.bind(this));
+        this.incrementButton.addEventListener('click', this.increment.bind(this));
+        this.decrementButton.addEventListener('click', this.decrement.bind(this));
+      }
+
+      toggleCounter() {
+        if (this.isAuto) {
+          this.stopCounter();
+          this.isAuto = false;
+          this.startStopButton.textContent = 'Start';
+          this.startStopButton.style.backgroundColor="green"
+
+        } else {
+          this.startCounter();
+          this.isAuto = true;
+          this.startStopButton.textContent = 'Stop';
+          this.startStopButton.style.backgroundColor="red"
+
+        }
+      }
+
+      startCounter() {
+        this.intervalId = setInterval(() => {
+          this.count++;
+          this.updateCountDisplay();
+        }, 1000);
+      }
+
+      stopCounter() {
+        clearInterval(this.intervalId);
+      }
+
+      increment() {
+        if (this.isAuto) {
+          this.stopCounter();
+          this.isAuto = false;
+          this.startStopButton.textContent = 'Start';
+        }
+        this.count++;
+        this.updateCountDisplay();
+        this.incrementButton.style.backgroundColor="blue"
+
+      }
+
+      decrement() {
+        if (this.isAuto) {
+          this.stopCounter();
+          this.isAuto = false;
+          this.startStopButton.textContent = 'Start';
+
+        }
+        this.count--;
+        this.updateCountDisplay();
+        this.decrementButton.style.backgroundColor="yellow"
+
+      }
+
+      updateCountDisplay() {
+        this.countDisplay.textContent = this.count;
+      }
+    }
+
+    const counter = new Counter();
+  </script>
+</body>
+</html>
